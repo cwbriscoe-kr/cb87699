@@ -7,5 +7,6 @@ FROM sys.stats
 select *
   from stats
  where ObjectName like 'ix_%'
- order by ObjectName
+   and StatisticUpdateDate is not null
+ order by StatisticUpdateDate desc
  ;

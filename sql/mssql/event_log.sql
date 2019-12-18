@@ -1,8 +1,8 @@
 with errors as (
 select *
   from ix_sys_event_log with (nolock)
- where DBTime > '2019-10-25 00:00:00.000'
-   and EventID = 3002015
+ where DBTime > '2019-12-01 00:00:00.000'
+   --and EventID = 3002015
 ), details as (
 select DBTime
       ,DBUser
@@ -29,8 +29,8 @@ select top (1000) *
   from details
  where 1=1
  --and Detail like '%query processor%'
- --and DBUser = 'KROGER\SAS9399'
- and Loc = 'CTX'
+ --and DBUser = 'KROGER\PLM6676'
+ --and Loc = 'CTX'
  order by DBTime desc
  --order by cnt desc
   ;
