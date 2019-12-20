@@ -11,8 +11,7 @@ select DBKey
       ,CaseNumberDeep
       ,Desc6 as FlowCode
   from ix_spc_product with (nolock)
- where Flag1 = 1
-   and Value14 in ('20','30')
+ where Value14 in ('20','30')
    and Desc45 = '87'
    and Desc6 in ('DTS','RMA','WHP','ALC') 
    and PartID > space(8)

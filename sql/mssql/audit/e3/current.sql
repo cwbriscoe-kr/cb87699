@@ -1,22 +1,5 @@
-SET NOCOUNT ON;
-SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
-WITH  product as (
-select DBKey
-      ,PartID as SkuNbr
-      ,TrayNumberWide
-      ,TrayNumberHigh
-      ,TrayNumberDeep
-      ,CaseNumberWide
-      ,CaseNumberHigh
-      ,CaseNumberDeep
-      ,Desc6 as FlowCode
-  from ix_spc_product with (nolock)
- where Flag1 = 1
-   and Value14 in ('20','30')
-   and Desc45 = '87'
-   and Desc6 in ('DTS','RMA','WHP','ALC') 
-   and PartID > space(8)
-),
+SET NOCOUNT ON         ;
+WITH 
 [ckbe3_floorplan_key_15wks_vw] as (
 -- Final view offers dbkeys to junction the latest
 -- planograms to the latest floorplans and sect_mult_flag
@@ -24,10 +7,10 @@ select DBKey
 -- * 2011-02-23 Glenn Mavor - add filter "and flr_qlvl_1.DBStatus IN (1, 2, 5)" to outer where clause 
 -- * 2015-08-19 Glenn Mavor - add DBDateEffectiveTo date to prevent summing overlapping live plans
 -- * 2015-12-22 Glenn Mavor - removed DBDateEffectiveTo date as live plans were being excluded
--- * 2019-12-13 Chris Briscoe - minimized rows selected from ix_spc_product by filtering on Flag1 (rms_cd)
 select flr_qlvl_1.dbkey DBkey
           ,flr_eff_date 
 		  ,flr_ver_key
+          ,GLN Loc_nbr --,flr_qlvl_1.[DBDateEffectiveFrom] DateFrom,flr_qlvl_1.DBDateEffectiveTo DateTo
 from
 	(
 select max(flr_qlvl_0.DBDateEffectiveFrom) flr_eff_date
@@ -62,6 +45,7 @@ where vklive.[flr_ver_key]=flr_qlvl_1.[DBVersionKey]
 select flr_qlvl_1.dbkey DBkey
           ,flr_eff_date 
 		  ,flr_ver_key
+          ,GLN Loc_nbr --,flr_qlvl_1.[DBDateEffectiveFrom] DateFrom,flr_qlvl_1.DBDateEffectiveTo DateTo
 from
 	(
 select max(flr_qlvl_0.DBDateEffectiveFrom) flr_eff_date
@@ -163,36 +147,36 @@ where vklive.[pog_ver_key]=pog_qlvl_1a.[DBVersionKey]
  	  , sum(PosReplMin) PosReplMin  
  	  , min(FlowCode)   FlowCode
  FROM (
- 	SELECT product.SkuNbr
-    , ix_str_store.Email AS LocNbr
+ 	SELECT	ISNULL(CAST(ix_spc_product.PartID AS char(8)), ' ') AS SkuNbr
+  , coalesce(CAST(SUBSTRING(ikbe3_floorplan_key_curr_vw.Loc_nbr, 1, 5) AS char(5)),CAST(SUBSTRING(strdata.Loc_Nbr, 1, 5)AS char(5)),' ') AS LocNbr
 	, ix_spc_planogram.Department                       
-	, isNull(ikbe3_floorsection_keys_vw.Flag1,0) as sect_mult_flag
+	, isNull(ikbe3_floorsection_keys_vw.Flag1,0)                         as sect_mult_flag
 	, ISNULL(CAST(
 			case 
 			when ix_spc_position.Orientation in (0,4,6,8,10,12,16,18,22) then
 				case 
 				when ix_spc_position.MerchStyle = 1 then
-					product.TrayNumberWide * ix_spc_position.Facings
+					ix_spc_product.TrayNumberWide * ix_spc_position.Facings
 				when ix_spc_position.MerchStyle = 2 then
-					product.CaseNumberWide * ix_spc_position.Facings
+					ix_spc_product.CaseNumberWide * ix_spc_position.Facings
 				else
 					Facings
 				end
 			when ix_spc_position.Orientation in (1,3,7,9,13,15,19,21) then
 				case 
 				when ix_spc_position.MerchStyle = 1 then
-					product.TrayNumberHigh * ix_spc_position.Facings
+					ix_spc_product.TrayNumberHigh * ix_spc_position.Facings
 				when ix_spc_position.MerchStyle = 2 then
-					product.CaseNumberHigh * ix_spc_position.Facings
+					ix_spc_product.CaseNumberHigh * ix_spc_position.Facings
 				else
 					Facings
 				end 
 			else
 				case 
 				when ix_spc_position.MerchStyle = 1 then
-					product.TrayNumberDeep * ix_spc_position.Facings
+					ix_spc_product.TrayNumberDeep * ix_spc_position.Facings
 				when ix_spc_position.MerchStyle = 2 then
-					product.CaseNumberDeep * ix_spc_position.Facings
+					ix_spc_product.CaseNumberDeep * ix_spc_position.Facings
 				else
 					Facings
 				end
@@ -202,25 +186,26 @@ where vklive.[pog_ver_key]=pog_qlvl_1a.[DBVersionKey]
       case when ix_spc_position.MerchStyle=3 then 1
 			 when ix_spc_position.MerchStyle=1 
 				  then 
-				  case when product.TrayNumberDeep=1 
-					   then ix_spc_position.HFacings*ix_spc_position.VFacings*product.Traynumberwide*product.Traynumberhigh
-					   else ix_spc_position.HFacings*ix_spc_position.VFacings*((product.Traynumberwide*product.Traynumberhigh)+product.Traynumberwide)  
+				  case when ix_spc_product.TrayNumberDeep=1 
+					   then ix_spc_position.HFacings*ix_spc_position.VFacings*ix_spc_product.Traynumberwide*ix_spc_product.Traynumberhigh
+					   else ix_spc_position.HFacings*ix_spc_position.VFacings*((ix_spc_product.Traynumberwide*ix_spc_product.Traynumberhigh)+ix_spc_product.Traynumberwide)  
 				  end
 			 when ix_spc_position.MerchStyle=2
 				  then 
-				  case when product.Casenumberdeep=1
-					   then ix_spc_position.HFacings*ix_spc_position.VFacings*product.Casenumberwide*product.Casenumberhigh 
-					   else ix_spc_position.HFacings*ix_spc_position.VFacings*((product.Casenumberwide*product.Casenumberhigh)+product.Casenumberwide)
+				  case when ix_spc_product.Casenumberdeep=1
+					   then ix_spc_position.HFacings*ix_spc_position.VFacings*ix_spc_product.Casenumberwide*ix_spc_product.Casenumberhigh 
+					   else ix_spc_position.HFacings*ix_spc_position.VFacings*((ix_spc_product.Casenumberwide*ix_spc_product.Casenumberhigh)+ix_spc_product.Casenumberwide)
 				  end
 			 else case when (ix_spc_position.DFacings+ix_spc_position.Zcapnum)=1
 					   then ix_spc_position.HFacings*(ix_spc_position.VFacings+ix_spc_position.Ycapnum)
 					   else (ix_spc_position.HFacings*(ix_spc_position.VFacings+ix_spc_position.Ycapnum))+ix_spc_position.HFacings
 				  end
 		  end  AS INT), 0)		  AS PosReplMin
-	,product.FlowCode
+	,  ix_spc_product.Desc6                           AS FlowCode
 	FROM         CKB.dbo.ix_spc_position AS ix_spc_position WITH (NOLOCK) 
-				 INNER JOIN product
-				  ON ix_spc_position.DBParentProductKey = product.DBKey 
+				 INNER JOIN
+				  CKB.dbo.ix_spc_product AS ix_spc_product WITH (NOLOCK) 
+				  ON ix_spc_position.DBParentProductKey = ix_spc_product.DBKey 
 				 INNER JOIN
 				  CKB.dbo.ix_spc_planogram AS ix_spc_planogram WITH (NOLOCK) 
 				  ON ix_spc_position.DBParentPlanogramKey = ix_spc_planogram.DBKey 
@@ -233,14 +218,20 @@ where vklive.[pog_ver_key]=pog_qlvl_1a.[DBVersionKey]
 				 INNER JOIN
 				  [ckbe3_floorplan_key_curr_vw] AS ikbe3_floorplan_key_curr_vw WITH (NOLOCK) 
 				  ON ikbe3_floorplan_key_curr_vw.DBkey = ikbe3_floorsection_keys_vw.dbparentfloorplankey
-	             INNER JOIN
-                   CKB.dbo.ix_str_store_floorplan as ix_str_store_floorplan WITH (NOLOCK)
-                   ON ikbe3_floorplan_key_curr_vw.DBkey = ix_str_store_floorplan.dbparentfloorplankey
-                 INNER JOIN
-                   CKB.dbo.ix_str_store as ix_str_store WITH (NOLOCK)
-                   ON ix_str_store.dbkey = ix_str_store_floorplan.dbparentstorekey
-	WHERE ix_spc_planogram.DBStatus IN (1, 2, 5)  
-      and ix_str_store.Email is not null                                                                                                              
+	             LEFT OUTER JOIN
+	              (select dbparentfloorplankey,Desc1 as Loc_Nbr
+	               from CKB.dbo.ix_str_store_floorplan as ix_str_store_floorplan
+	                   ,CKB.dbo.ix_str_store as ix_str_store
+	                where ix_str_store.dbkey = ix_str_store_floorplan.dbparentstorekey) strdata
+    			  ON ikbe3_floorplan_key_curr_vw.DBkey = strdata.dbparentfloorplankey
+	WHERE ix_spc_planogram.DBStatus IN (1, 2, 5) 
+	AND CAST(ix_spc_product.Desc6 AS varchar(3)) IN ('DTS', 'RMA','WHP','ALC') 
+	AND ix_spc_product.Value14 IN (20, 30) 
+  AND ix_spc_product.Desc45  = '87'                                                                                                                     
+  AND ix_spc_product.PartID  > ' '                                                            
+  AND coalesce(CAST(SUBSTRING(ikbe3_floorplan_key_curr_vw.Loc_nbr, 1, 5) AS char(5))
+               ,CAST(SUBSTRING(strdata.Loc_Nbr, 1, 5)AS char(5)),' ') 
+               between '00000' AND '99999'                                                            
  	) flrsecpogjoin
  group by SkuNbr
        , LocNbr
