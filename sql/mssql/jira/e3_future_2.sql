@@ -1,7 +1,7 @@
 SET NOCOUNT ON;
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 WITH  product as (
-select DBKey
+select top(1000) DBKey
       ,PartID as SkuNbr
       ,TrayNumberWide
       ,TrayNumberHigh

@@ -1,35 +1,29 @@
 SET NOCOUNT ON;
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
-with fps as (
-select g.email as store 
+with floorplans as (
+select g.email as LocNbr 
       ,isnull(g.flag3,0) as str_converted 
       ,isnull(g.flag5,0) as str_ready_for_test
       ,e.dbdateeffectivefrom as fp_live_date
+      ,e.dbdateeffectiveto as fp_end_date
       ,g.dbkey as str_key
       ,e.dbkey as flr_key
       ,e.dbversionkey as flr_versionkey
       ,e.dbstatus as flr_status
-  from ix_flr_floorplan e
-  join ix_str_store_floorplan f on f.dbparentfloorplankey = e.dbversionkey
-  join ix_str_store g on g.dbkey = f.dbparentstorekey
+  from ix_flr_floorplan e with (nolock)
+  join ix_str_store_floorplan f with (nolock) on f.dbparentfloorplankey = e.dbversionkey
+  join ix_str_store g with (nolock) on g.dbkey = f.dbparentstorekey 
  where e.dbstatus in (1,2,7)
    and g.email between '00000' and '99999'
-   and isnull(e.desc2,'') != 'SCHED'
-   and isnull(e.name,'') not like 'CAO Mapping -%'
-), floorplans as (
-select fps.* 
-      ,rank() over (partition by flr_versionkey order by fp_live_date desc, flr_key desc) daterank
-  from fps
 ), planograms as (
 select floorplans.*
       ,plano.DBKey as pog_key
   from floorplans
-  join ix_flr_section flrsect
+  join ix_flr_section flrsect with (nolock)
     on flrsect.DBParentFloorplanKey = floorplans.flr_key
-  join ix_spc_planogram plano
+  join ix_spc_planogram plano with (nolock)
     on plano.DBKey = flrsect.DBParentPlanogramKey
  where plano.DBStatus in (1,3,5)
---   and floorplans.daterank = 1
 ), products as (
 select pogs.*
       ,prod.PartID as SkuNbr
@@ -76,19 +70,49 @@ select pogs.*
                       pos.HFacings * (pos.VFacings + pos.Ycapnum)
                  else pos.HFacings * (pos.VFacings + pos.Ycapnum) + pos.HFacings end
        end as int),0) as PosReplMin
+      ,prod.Desc6 as FlowCode
   from planograms pogs
-  join ix_spc_position pos
+  join ix_spc_position pos with (nolock)
     on pos.DBParentPlanogramKey = pogs.pog_key
-  join ix_spc_product prod
+  join ix_spc_product prod with (nolock)
     on prod.DBKey = pos.DBParentProductKey
  where prod.Value14 in ('20','30')
    and prod.Desc45 = '87'
    and prod.Desc6 in ('DTS','RMA','WHP','ALC') 
    and prod.PartID > space(8)
-   and prod.PartID = '20975555'
-   and pogs.store = '00024'
-   and pogs.store between '00000' and '00600'
---   and daterank > 1
+), current_ranked as (
+select rank() over (partition by flr_versionkey, SkuNbr, LocNbr order by fp_live_date desc, flr_key desc) daterank
+      ,'C' as TypeFlag
+      ,prod.*
+  from products prod
+where prod.fp_live_date <= current_timestamp
+), future_ranked as (
+select rank() over (partition by flr_versionkey, SkuNbr, LocNbr order by fp_live_date desc, flr_key desc) daterank
+      ,'F' as TypeFlag
+      ,prod.*
+  from products prod
+ where prod.fp_live_date <= dateadd(day, 15*7, current_timestamp)
+   and prod.fp_live_date  > current_timestamp
+   and prod.fp_end_date >= dateadd(day, 15*7, current_timestamp)
+), ranked as (
+select * from current_ranked where daterank = 1
+ union
+select * from future_ranked where daterank = 1
+), results as (
+select SkuNbr
+      ,LocNbr
+      ,TypeFlag
+      ,sum(Facings) as Facings
+      ,sum(Capacity) as Capacity
+      ,sum(PosReplMin) as PosReplMin
+      ,min(FlowCode) as FlowCode
+  from ranked
+ group by SkuNbr, LocNbr, TypeFlag
 )
+--select * from ranked where daterank > 1;
+--select * from ranked where SkuNbr in ('76938443','01488647') and LocNbr = '00210' ;
 select top (1000) * 
-  from products
+  from results
+-- where LocNbr = '00210'
+--   and SkuNbr in ('76938443','01488647')
+-- order by SkuNbr, LocNbr, TypeFlag
