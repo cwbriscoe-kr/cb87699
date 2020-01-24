@@ -1,7 +1,7 @@
 with errors as (
 select *
   from ix_sys_event_log with (nolock)
- where DBTime > '2019-12-01 00:00:00.000'
+ where DBTime > '2020-01-01 00:00:00.000'
    --and EventID = 3002015
 ), details as (
 select DBTime
