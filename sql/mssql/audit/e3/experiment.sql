@@ -19,10 +19,10 @@ select g.email as LocNbr
 select floorplans.*
       ,plano.DBKey as pog_key
   from floorplans
-  join ix_flr_section flrsect with (nolock)
-    on flrsect.DBParentFloorplanKey = floorplans.flr_key
+  join ix_flr_performance flrperf with (nolock)
+    on flrperf.DBParentFloorplanKey = floorplans.flr_key
   join ix_spc_planogram plano with (nolock)
-    on plano.DBKey = flrsect.DBParentPlanogramKey
+    on plano.DBKey = flrperf.DBParentPlanogramKey
  where plano.DBStatus in (1,3,5)
 ), products as (
 select pogs.*
@@ -111,8 +111,9 @@ select SkuNbr
 )
 --select * from ranked where daterank > 1;
 --select * from ranked where SkuNbr in ('76938443','01488647') and LocNbr = '00210' ;
-select top (1000) * 
+select top 1000 * 
   from results
--- where LocNbr = '00210'
---   and SkuNbr in ('76938443','01488647')
--- order by SkuNbr, LocNbr, TypeFlag
+ where LocNbr = '00210'
+   and SkuNbr in ('76938443','01488647')
+ order by SkuNbr, LocNbr, TypeFlag
+OPTION(USE HINT('ENABLE_PARALLEL_PLAN_PREFERENCE'), RECOMPILE)
