@@ -1,0 +1,2 @@
+-- create a query that shows where the base upc between magic does not
+-- match and the pid base does not exist in magic for sku

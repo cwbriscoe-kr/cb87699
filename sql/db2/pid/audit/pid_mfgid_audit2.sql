@@ -1,0 +1,1 @@
+select mfg_upc_no as mfgid from prd.pid_mfgid;

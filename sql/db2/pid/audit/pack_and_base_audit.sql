@@ -1,0 +1,84 @@
+WITH MAG AS(
+SELECT IS2.SKU_NBR                        AS SKU_NO
+      ,SV1.MSTR_ART_NBR                   AS MAG_CAS_NO
+      ,VA1.ART_NBR                        AS MAG_CON_NO
+      ,CHAR(SUBSTR(DIGITS(DECIMAL(RTRIM( 
+       SV1.MSTR_ART_NBR),14)),1,1) || 
+       SUBSTR(DIGITS(DECIMAL(RTRIM( 
+       SV1.MSTR_ART_NBR),14)),3,1) || 
+       SUBSTR(DIGITS(DECIMAL(RTRIM( 
+       SV1.MSTR_ART_NBR),14)),2,1) || 
+       SUBSTR(DIGITS(DECIMAL(RTRIM( 
+       SV1.MSTR_ART_NBR),14)),4,10),13)   AS PID_CAS_NO 
+      ,CHAR(SUBSTR(DIGITS(DECIMAL(RTRIM( 
+       VA1.ART_NBR),14)),1,1) || 
+       SUBSTR(DIGITS(DECIMAL(RTRIM( 
+       VA1.ART_NBR),14)),3,1) || 
+       SUBSTR(DIGITS(DECIMAL(RTRIM( 
+       VA1.ART_NBR),14)),2,1) || 
+       SUBSTR(DIGITS(DECIMAL(RTRIM( 
+       VA1.ART_NBR),14)),4,10),13)        AS PID_CON_NO 
+      ,SV1.MSTR_PACK_QTY                  AS MAG_PAK_QY 
+  FROM PRD.IS2_ITM_SKU      IS2 
+      ,PRD.SV1_SKU_VNDR_DTL SV1 
+      ,PRD.SL4_SKU_LOC      SL4 
+      ,PRD.VA1_VNDR_ART     VA1 
+      ,PRD.FI1_FT_ITM       FI1 
+ WHERE IS2.SKU_NBR            = SV1.SKU_NBR 
+   AND IS2.VNDR_NBR           = SV1.VNDR_NBR 
+   AND IS2.SKU_TYP_CD        IN ('01','02','03','04','05','55') 
+   AND FI1.ITM_NBR            = IS2.ITM_NBR 
+   AND FI1.EFF_FR_DT         <= CURRENT DATE 
+   AND FI1.EFF_TO_DT          > CURRENT DATE 
+   AND FI1.REC_STAT_CD        = '01' 
+   AND SV1.SKU_NBR            = VA1.SKU_NBR 
+   AND SV1.VNDR_NBR           = VA1.VNDR_NBR 
+   AND SV1.PRMY_ALTN_VNDR_IND = 'P' 
+   AND VA1.SKU_NBR            = SL4.SKU_NBR 
+   AND VA1.ART_NBR_ID_CD     IN ('UK','CK','CE','EN','CS','CA','IH','IN','UA','UE')
+   AND VA1.BAS_ARL_FL         = 'B' 
+   AND SL4.LOC_NBR            = '00065' 
+   AND SL4.REC_STAT_CD        = '01'		
+   AND IS2.REC_STAT_CD        BETWEEN '20' AND '60'
+   AND LENGTH(LTRIM(RTRIM(SV1.MSTR_ART_NBR))) > 0 
+),
+TEMP AS (
+SELECT MAG.SKU_NO
+      ,MAG.MAG_CAS_NO
+      ,PID.CAS_UPC_NO AS PID_CAS_NO
+      ,CASE
+       WHEN MAG.PID_CAS_NO = PID.CAS_UPC_NO THEN
+         'Y'
+       ELSE
+         'N'
+       END AS CAS_MATCH
+      ,MAG.MAG_CON_NO
+      ,PID.CON_UPC_NO
+      ,CASE
+       WHEN MAG.PID_CON_NO = PID.CON_UPC_NO THEN
+         'Y'
+       ELSE
+         'N'
+       END AS CON_MATCH
+      ,MAG.MAG_PAK_QY
+      ,PID.CAS_PAK_QY AS PID_PAK_QY
+      ,CASE
+       WHEN MAG.MAG_PAK_QY = PID.CAS_PAK_QY THEN
+         'Y'
+       ELSE
+         'N'
+       END AS PAK_MATCH
+      ,PID.LIN_NO
+  FROM MAG
+      ,PRD.K12_PID_WHSCA PID
+ WHERE MAG.SKU_NO || '0' = PID.ITM_NO
+   AND PID.SRC_ID        = '791'
+)
+SELECT *
+  FROM TEMP
+ WHERE TEMP.CAS_MATCH = 'N'
+    OR TEMP.CON_MATCH = 'N'
+    OR TEMP.PAK_MATCH = 'N'
+ FETCH FIRST 1000000 ROWS ONLY
+  WITH UR 
+;
