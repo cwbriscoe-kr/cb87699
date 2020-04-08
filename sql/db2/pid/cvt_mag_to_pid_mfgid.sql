@@ -2,7 +2,6 @@ with mupc as (
   select '00022653576923' as mupc
     from prd.tt1_truth_tbl
 ),
-
 pupc as (
     select
     mupc
@@ -13,6 +12,5 @@ pupc as (
     as mfgid
     from mupc
 )
-
 select * from pupc;
 
