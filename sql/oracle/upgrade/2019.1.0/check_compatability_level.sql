@@ -1,0 +1,1 @@
+select * from database_compatible_level;
