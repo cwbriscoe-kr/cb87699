@@ -302,6 +302,37 @@ begin
   exception when others then null;
 end;
 
+
+--Roll plan_format backups (7-days worth)
+begin
+  execute immediate 'drop table wl_purge_bkup_pformat7';
+  exception when others then null;
+end;
+begin
+  execute immediate 'alter table wl_purge_bkup_pformat6 rename to wl_purge_bkup_pformat7';
+  exception when others then null;
+end;
+begin
+  execute immediate 'alter table wl_purge_bkup_pformat5 rename to wl_purge_bkup_pformat6';
+  exception when others then null;
+end;
+begin
+  execute immediate 'alter table wl_purge_bkup_pformat4 rename to wl_purge_bkup_pformat5';
+  exception when others then null;
+end;
+begin
+  execute immediate 'alter table wl_purge_bkup_pformat3 rename to wl_purge_bkup_pformat4';
+  exception when others then null;
+end;
+begin
+  execute immediate 'alter table wl_purge_bkup_pformat2 rename to wl_purge_bkup_pformat3';
+  exception when others then null;
+end;
+begin
+  execute immediate 'alter table wl_purge_bkup_pformat1 rename to wl_purge_bkup_pformat2';
+  exception when others then null;
+end;
+
 update dq_status
    set status_desc = '8 wl_purge_bkup_roll'
       ,rec_alt_ts  = systimestamp;
@@ -365,6 +396,15 @@ execute immediate 'CREATE TABLE wl_purge_bkup_pstyle1 nologging tablespace AAMDA
        ',wl_purge_list pb ' ||
  'where ps.wl_key = pb.wl_key ' ||
  'order by ps.wl_key';
+
+--Create backup of the plan_format lines we are going to delete
+execute immediate 'CREATE TABLE wl_purge_bkup_pformat1 nologging tablespace AAMDATA as ' ||
+ 'select pf.* ' ||
+   'from pack_format pf ' ||
+   'where not exists ( ' ||
+       'select 1 ' ||
+         'from worklist wl ' ||
+        'where pf.allocation_nbr = wl.alloc_nbr) ';
  
 update dq_status
    set status_desc = '9 wl_purge_bkup_create'
@@ -410,6 +450,16 @@ BEGIN
      WHERE WL_KEY IN 
                     (SELECT WL_KEY
                        FROM WL_PURGE_LIST);
+    EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
+  END;
+  
+  BEGIN
+    DELETE
+      FROM  PLAN_FORMAT PF
+     WHERE NOT EXISTS (
+           SELECT 1
+             FROM WORKLIST WL
+            WHERE PF.ALLOCATION_NBR = WL.ALLOC_NBR);            
     EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
   END;
   
