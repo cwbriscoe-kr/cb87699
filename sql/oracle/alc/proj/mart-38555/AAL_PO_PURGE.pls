@@ -400,7 +400,7 @@ execute immediate 'CREATE TABLE wl_purge_bkup_pstyle1 nologging tablespace AAMDA
 --Create backup of the plan_format lines we are going to delete
 execute immediate 'CREATE TABLE wl_purge_bkup_pformat1 nologging tablespace AAMDATA as ' ||
  'select pf.* ' ||
-   'from pack_format pf ' ||
+   'from plan_format pf ' ||
    'where not exists ( ' ||
        'select 1 ' ||
          'from worklist wl ' ||
