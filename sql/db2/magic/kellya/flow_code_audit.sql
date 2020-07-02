@@ -6,7 +6,10 @@ with skutyp as (
     and org_rgn_nbr = '00'                     
     and substr(tbl_elem_text,26,1) = 'Y' 
 )
-select sl4.*
+select is2.sku_nbr as sku
+      ,is2.desc_lng_txt as desc
+      ,fi1.ft_lvl06_cd as dept
+      ,sl4.mdse_flow_cd 
   from skutyp
       ,prd.is2_itm_sku is2
       ,prd.fi1_ft_itm fi1
