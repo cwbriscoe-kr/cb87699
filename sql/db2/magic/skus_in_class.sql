@@ -5,7 +5,8 @@ select is2.*
    and fi1.rec_stat_cd = '01'
    and is2.rec_stat_cd = '30'
    and is2.sku_typ_cd in ('01','02')
-   and fi1.ft_lvl08_cd = '905'
+   and fi1.ft_lvl08_cd = '961'
+   and fi1.ft_lvl09_cd = '809'
    and sku_nbr < '10000000'
  order by is2.sku_nbr
    ;
