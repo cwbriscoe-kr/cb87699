@@ -26,6 +26,7 @@ BEGIN
       '      ,SUBCLASS_NBR ' ||
       '      ,CHOICE_NBR ' ||
       '      ,STYLE_MASTER_SKU ' ||
+      '      ,SKU_NBR ' ||
       '      ,COLOR_NBR ' ||
       '      ,SIZE_NBR ' ||
       '      ,DIM_NBR ' ||
@@ -138,109 +139,109 @@ BEGIN
       '      ,0 AS ON_HAND_103AGO' ||
       '      ,0 AS ON_HAND_104AGO' ||
       '      ,SLS_01AGO ' ||
-      '      ,SLS_02_AGO' ||
-      '      ,SLS_03_AGO' ||
-      '      ,SLS_04_AGO' ||
-      '      ,SLS_05_AGO' ||
-      '      ,SLS_06_AGO' ||
-      '      ,SLS_07_AGO' ||
-      '      ,SLS_08_AGO' ||
-      '      ,SLS_09_AGO' ||
-      '      ,SLS_10_AGO' ||
-      '      ,SLS_11_AGO' ||
-      '      ,SLS_12_AGO' ||
-      '      ,SLS_13_AGO' ||
-      '      ,SLS_14_AGO' ||
-      '      ,SLS_15_AGO' ||
-      '      ,SLS_16_AGO' ||
-      '      ,SLS_17_AGO' ||
-      '      ,SLS_18_AGO' ||
-      '      ,SLS_19_AGO' ||
-      '      ,SLS_20_AGO' ||
-      '      ,SLS_21_AGO' ||
-      '      ,SLS_22_AGO' ||
-      '      ,SLS_23_AGO' ||
-      '      ,SLS_24_AGO' ||
-      '      ,SLS_25_AGO' ||
-      '      ,SLS_26_AGO' ||
-      '      ,SLS_27_AGO' ||
-      '      ,SLS_28_AGO' ||
-      '      ,SLS_29_AGO' ||
-      '      ,SLS_30_AGO' ||
-      '      ,SLS_31_AGO' ||
-      '      ,SLS_32_AGO' ||
-      '      ,SLS_33_AGO' ||
-      '      ,SLS_34_AGO' ||
-      '      ,SLS_35_AGO' ||
-      '      ,SLS_36_AGO' ||
-      '      ,SLS_37_AGO' ||
-      '      ,SLS_38_AGO' ||
-      '      ,SLS_39_AGO' ||
-      '      ,SLS_40_AGO' ||
-      '      ,SLS_41_AGO' ||
-      '      ,SLS_42_AGO' ||
-      '      ,SLS_43_AGO' ||
-      '      ,SLS_44_AGO' ||
-      '      ,SLS_45_AGO' ||
-      '      ,SLS_46_AGO' ||
-      '      ,SLS_47_AGO' ||
-      '      ,SLS_48_AGO' ||
-      '      ,SLS_49_AGO' ||
-      '      ,SLS_50_AGO' ||
-      '      ,SLS_51_AGO' ||
-      '      ,SLS_52_AGO' ||
-      '      ,SLS_53_AGO' ||
-      '      ,SLS_54_AGO' ||
-      '      ,SLS_55_AGO' ||
-      '      ,SLS_56_AGO' ||
-      '      ,SLS_57_AGO' ||
-      '      ,SLS_58_AGO' ||
-      '      ,SLS_59_AGO' ||
-      '      ,SLS_60_AGO' ||
-      '      ,SLS_61_AGO' ||
-      '      ,SLS_62_AGO' ||
-      '      ,SLS_63_AGO' ||
-      '      ,SLS_64_AGO' ||
-      '      ,SLS_65_AGO' ||
-      '      ,SLS_66_AGO' ||
-      '      ,SLS_67_AGO' ||
-      '      ,SLS_68_AGO' ||
-      '      ,SLS_69_AGO' ||
-      '      ,SLS_70_AGO' ||
-      '      ,SLS_71_AGO' ||
-      '      ,SLS_72_AGO' ||
-      '      ,SLS_73_AGO' ||
-      '      ,SLS_74_AGO' ||
-      '      ,SLS_75_AGO' ||
-      '      ,SLS_76_AGO' ||
-      '      ,SLS_77_AGO' ||
-      '      ,SLS_78_AGO' ||
-      '      ,0 AS SLS_79_AGO' ||
-      '      ,0 AS SLS_80_AGO' ||
-      '      ,0 AS SLS_81_AGO' ||
-      '      ,0 AS SLS_82_AGO' ||
-      '      ,0 AS SLS_83_AGO' ||
-      '      ,0 AS SLS_84_AGO' ||
-      '      ,0 AS SLS_85_AGO' ||
-      '      ,0 AS SLS_86_AGO' ||
-      '      ,0 AS SLS_87_AGO' ||
-      '      ,0 AS SLS_88_AGO' ||
-      '      ,0 AS SLS_89_AGO' ||
-      '      ,0 AS SLS_90_AGO' ||
-      '      ,0 AS SLS_91_AGO' ||
-      '      ,0 AS SLS_92_AGO' ||
-      '      ,0 AS SLS_93_AGO' ||
-      '      ,0 AS SLS_94_AGO' ||
-      '      ,0 AS SLS_95_AGO' ||
-      '      ,0 AS SLS_96_AGO' ||
-      '      ,0 AS SLS_97_AGO' ||
-      '      ,0 AS SLS_98_AGO' ||
-      '      ,0 AS SLS_99_AGO' ||
-      '      ,0 AS SLS_100_AGO' ||
-      '      ,0 AS SLS_101_AGO' ||
-      '      ,0 AS SLS_102_AGO' ||
-      '      ,0 AS SLS_103_AGO' ||
-      '      ,0 AS SLS_104_AGO' ||
+      '      ,SLS_02AGO' ||
+      '      ,SLS_03AGO' ||
+      '      ,SLS_04AGO' ||
+      '      ,SLS_05AGO' ||
+      '      ,SLS_06AGO' ||
+      '      ,SLS_07AGO' ||
+      '      ,SLS_08AGO' ||
+      '      ,SLS_09AGO' ||
+      '      ,SLS_10AGO' ||
+      '      ,SLS_11AGO' ||
+      '      ,SLS_12AGO' ||
+      '      ,SLS_13AGO' ||
+      '      ,SLS_14AGO' ||
+      '      ,SLS_15AGO' ||
+      '      ,SLS_16AGO' ||
+      '      ,SLS_17AGO' ||
+      '      ,SLS_18AGO' ||
+      '      ,SLS_19AGO' ||
+      '      ,SLS_20AGO' ||
+      '      ,SLS_21AGO' ||
+      '      ,SLS_22AGO' ||
+      '      ,SLS_23AGO' ||
+      '      ,SLS_24AGO' ||
+      '      ,SLS_25AGO' ||
+      '      ,SLS_26AGO' ||
+      '      ,SLS_27AGO' ||
+      '      ,SLS_28AGO' ||
+      '      ,SLS_29AGO' ||
+      '      ,SLS_30AGO' ||
+      '      ,SLS_31AGO' ||
+      '      ,SLS_32AGO' ||
+      '      ,SLS_33AGO' ||
+      '      ,SLS_34AGO' ||
+      '      ,SLS_35AGO' ||
+      '      ,SLS_36AGO' ||
+      '      ,SLS_37AGO' ||
+      '      ,SLS_38AGO' ||
+      '      ,SLS_39AGO' ||
+      '      ,SLS_40AGO' ||
+      '      ,SLS_41AGO' ||
+      '      ,SLS_42AGO' ||
+      '      ,SLS_43AGO' ||
+      '      ,SLS_44AGO' ||
+      '      ,SLS_45AGO' ||
+      '      ,SLS_46AGO' ||
+      '      ,SLS_47AGO' ||
+      '      ,SLS_48AGO' ||
+      '      ,SLS_49AGO' ||
+      '      ,SLS_50AGO' ||
+      '      ,SLS_51AGO' ||
+      '      ,SLS_52AGO' ||
+      '      ,SLS_53AGO' ||
+      '      ,SLS_54AGO' ||
+      '      ,SLS_55AGO' ||
+      '      ,SLS_56AGO' ||
+      '      ,SLS_57AGO' ||
+      '      ,SLS_58AGO' ||
+      '      ,SLS_59AGO' ||
+      '      ,SLS_60AGO' ||
+      '      ,SLS_61AGO' ||
+      '      ,SLS_62AGO' ||
+      '      ,SLS_63AGO' ||
+      '      ,SLS_64AGO' ||
+      '      ,SLS_65AGO' ||
+      '      ,SLS_66AGO' ||
+      '      ,SLS_67AGO' ||
+      '      ,SLS_68AGO' ||
+      '      ,SLS_69AGO' ||
+      '      ,SLS_70AGO' ||
+      '      ,SLS_71AGO' ||
+      '      ,SLS_72AGO' ||
+      '      ,SLS_73AGO' ||
+      '      ,SLS_74AGO' ||
+      '      ,SLS_75AGO' ||
+      '      ,SLS_76AGO' ||
+      '      ,SLS_77AGO' ||
+      '      ,SLS_78AGO' ||
+      '      ,0 AS SLS_79AGO' ||
+      '      ,0 AS SLS_80AGO' ||
+      '      ,0 AS SLS_81AGO' ||
+      '      ,0 AS SLS_82AGO' ||
+      '      ,0 AS SLS_83AGO' ||
+      '      ,0 AS SLS_84AGO' ||
+      '      ,0 AS SLS_85AGO' ||
+      '      ,0 AS SLS_86AGO' ||
+      '      ,0 AS SLS_87AGO' ||
+      '      ,0 AS SLS_88AGO' ||
+      '      ,0 AS SLS_89AGO' ||
+      '      ,0 AS SLS_90AGO' ||
+      '      ,0 AS SLS_91AGO' ||
+      '      ,0 AS SLS_92AGO' ||
+      '      ,0 AS SLS_93AGO' ||
+      '      ,0 AS SLS_94AGO' ||
+      '      ,0 AS SLS_95AGO' ||
+      '      ,0 AS SLS_96AGO' ||
+      '      ,0 AS SLS_97AGO' ||
+      '      ,0 AS SLS_98AGO' ||
+      '      ,0 AS SLS_99AGO' ||
+      '      ,0 AS SLS_100AGO' ||
+      '      ,0 AS SLS_101AGO' ||
+      '      ,0 AS SLS_102AGO' ||
+      '      ,0 AS SLS_103AGO' ||
+      '      ,0 AS SLS_104AGO' ||
       '      ,LASTROLL ' ||
       '      ,ATTR_1_CODE' ||
       '      ,ATTR_2_CODE' ||
@@ -513,6 +514,15 @@ BEGIN
   END;
   COMMIT;    
 
+  AAMFM.LOGOUTPUT('', 'BEGIN GRANTS ON STAGE_DIMENSION');
+  BEGIN
+    EXECUTE IMMEDIATE 'GRANT UPDATE, INSERT, DELETE, SELECT ON STAGE_DIMENSION TO AAMFM';
+  EXCEPTION
+    WHEN OTHERS THEN
+      RAISE;
+  END;
+  COMMIT;  
+  
   AAMFM.LOGOUTPUT('', 'BEGIN REBUILDSTAGESUBCLASS');
   BEGIN
     ALLOCMMS.REBUILDSTAGESUBCLASS;
