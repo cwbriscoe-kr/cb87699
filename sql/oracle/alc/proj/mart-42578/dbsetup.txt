@@ -1,6 +1,6 @@
 -go into database setup
 -hit next until step 5
--verify new columns show up at the bottom for actual_format and the 3 stage tables
+-verify new columns show up at the bottom for actual_format, the 3 stage tables and the 7 views
 -click finish
 -click update
 -click no
