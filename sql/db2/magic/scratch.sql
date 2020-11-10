@@ -77,3 +77,7 @@ select *
   from accp.br1_pm_btch_rqst 
  where chng_nbr = 94444681
  ;
+ 
+ select *
+   from krgnetdb25.pidsyst.pidrmote
+   ;
