@@ -1,18 +1,18 @@
-alter database TEST
-  modify file (NAME = TEST,
-               FILENAME = 'G:\MSSQL13.SQL1\MSSQL\DATA\TEST.mdf');
+alter database MPR
+  modify file (NAME = MPR,
+               FILENAME = 'G:\MSSQL13.SQL1\MSSQL\DATA\MPR.mdf');
 go
 
-alter database TEST
-  modify file (NAME = TEST_log,
-               FILENAME = 'G:\MSSQL13.SQL1\MSSQL\DATA\TEST_log.ldf');
+alter database MPR
+  modify file (NAME = MPR_log,
+               FILENAME = 'G:\MSSQL13.SQL1\MSSQL\DATA\MPR_log.ldf');
 go
 
-alter database TEST set OFFLINE;
+alter database MPR set OFFLINE;
 go
 
 -- Physically copy database files here
 
-alter database TEST set ONLINE;
+alter database MPR set ONLINE;
 go
 
