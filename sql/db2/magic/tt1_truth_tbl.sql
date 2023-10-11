@@ -1,0 +1,1 @@
+select 1 from prd.TT1_TRUTH_TBL with ur;

@@ -3,3 +3,4 @@ select *
  where sku_nbr = '81620111'
   with ur
   ;
+  
