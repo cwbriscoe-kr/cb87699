@@ -1,18 +1,17 @@
-alter database MPR
-  modify file (NAME = MPR,
-               FILENAME = 'G:\MSSQL13.SQL1\MSSQL\DATA\MPR.mdf');
+alter database CKB_prdcopy set OFFLINE;
 go
 
-alter database MPR
-  modify file (NAME = MPR_log,
-               FILENAME = 'G:\MSSQL13.SQL1\MSSQL\DATA\MPR_log.ldf');
+alter database CKB_prdcopy
+  modify file (NAME = CKB_prdcopy,
+               FILENAME = 'G:\MSSQL13.SQL1\MSSQL\DATA\CKB_prdcopy.mdf');
 go
 
-alter database MPR set OFFLINE;
+alter database CKB_prdcopy
+  modify file (NAME = CKB_prdcopy_log,
+               FILENAME = 'G:\MSSQL13.SQL1\MSSQL\DATA\CKB_prdcopy_log.ldf');
 go
 
 -- Physically copy database files here
 
-alter database MPR set ONLINE;
+alter database CKB_prdcopy set ONLINE;
 go
-
