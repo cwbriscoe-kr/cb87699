@@ -1,0 +1,1 @@
+alter database Magic_Backup modify name = zzzMagic_Backup;
