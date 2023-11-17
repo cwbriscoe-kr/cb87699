@@ -1,6 +1,6 @@
 select *
   from prd.PM2_MDSE_PRC_MSTR pmpm 
- where sku_nbr = '32971910'
+ where sku_nbr = '43425617'
    --where loc_nbr in ('00065', '00461')
   with ur
  ;
