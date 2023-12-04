@@ -4,3 +4,9 @@ select *
    and rec_stat_cd = '01'
   with ur
   ;
+  
+select *
+  from accp.fi1_ft_itm ffi 
+ where itm_nbr = '12782529'
+  with ur 
+  ;

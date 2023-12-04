@@ -1,4 +1,5 @@
 select *
   from prd.ol2_org_loc ool 
- where loc_id = '11672'
+ --where loc_id = '11672'
+ order by loc_id
  ;
