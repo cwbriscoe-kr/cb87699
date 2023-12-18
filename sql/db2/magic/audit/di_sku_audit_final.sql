@@ -21,11 +21,11 @@ select fi1.ft_lvl06_cd as dept
    and pm2.sku_nbr = is2.sku_nbr
    and pm2.perm_prc_typ_cd in ('07','08','67','68')
    and pm2.loc_nbr in ('00065','00461')
-   and pm2.rec_alt_ts < current timestamp - 180 days
+   and pm2.rec_alt_ts < current timestamp - 90 days
    and sl4.sku_nbr = is2.sku_nbr
    and sl4.loc_nbr = pm2.loc_nbr
    and sl4.rec_stat_cd in ('01','40')
-   and sl4.rec_alt_ts < current timestamp - 180 days
+   and sl4.rec_alt_ts < current timestamp - 90 days
    and va1.sku_nbr = is2.sku_nbr 
    and va1.bas_arl_fl = 'B'
    and ol2.loc_id = pm2.loc_nbr 
