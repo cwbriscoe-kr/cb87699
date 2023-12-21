@@ -4,14 +4,12 @@ with whs as (
    from prd.td1_tbl_dtl 
   where tbl_id            = 'K006' 
 ), 
-
 skutype as ( 
  select substr(tbl_elem_id,1,2) as code
    from prd.td1_tbl_dtl
   where tbl_id = 'F026' 
     and substr(tbl_elem_text,26,1) = 'Y' 
 ), 
-
 magbas as (
   select is2.sku_nbr        as sku
         ,sv1.mstr_art_nbr   as magcas
@@ -44,8 +42,8 @@ magbas as (
      and length(ltrim(rtrim(va1.art_nbr))) > 0
 --group by is2.vndr_nbr, va1.art_nbr, is2.sku_nbr, is2.rec_stat_cd
 )
-
 select *
   from magbas
+  with ur
 --fetch first 10000 rows only
 ;

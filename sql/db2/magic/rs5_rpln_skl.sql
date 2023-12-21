@@ -5,3 +5,9 @@ select *
   ;
   
 /50887
+
+select *
+  from prd.rs5_rpln_skl rrs 
+ where sku_nbr = '16885042'
+ order by skl_grp_cd 
+  with ur;

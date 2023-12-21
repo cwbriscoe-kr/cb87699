@@ -18,3 +18,8 @@ select distinct(org_co_id)
  --order by loc_id
  ;
  
+select *
+  from prd.ol2_org_loc ol2
+ where loc_id in ('50883','50894','50972')
+  with ur;
+ 
