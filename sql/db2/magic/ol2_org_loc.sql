@@ -8,7 +8,8 @@ select org_co_id
 select *
   from prd.ol2_org_loc ool 
  --where loc_id = '11672'
-   where org_rgn_id = '50'
+   where loc_id like '50%'
+     and loc_clse_dt > current date
  order by loc_id
  ;
  
@@ -21,5 +22,10 @@ select distinct(org_co_id)
 select *
   from prd.ol2_org_loc ol2
  where loc_id in ('50883','50894','50972')
+  with ur;
+
+
+select distinct loc_type_cd
+  from prd.ol2_org_loc ool 
   with ur;
  

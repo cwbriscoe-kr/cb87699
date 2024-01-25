@@ -1,6 +1,6 @@
 select *             
-  from accp.td1_tbl_dtl td1               
- where td1.tbl_id = 'K003'           
+  from prd.td1_tbl_dtl td1               
+ where td1.tbl_id = 'R006'           
   with ur 
   ;
 
