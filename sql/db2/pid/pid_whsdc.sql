@@ -41,4 +41,25 @@ select whs1.*
        )
   with ur
  fetch first 1 row only
+ 
+ select * from prd.pid_whsca;
+ 
+ select whsca.*
+   from prd.k12_pid_whsca whsca
+       ,prd.sv1_sku_vndr_dtl sv1
+  where sv1.sku_nbr  = '01411942'
+    and sv1.prmy_altn_vndr_ind = 'P'
+    and whsca.src_id = '791'
+    and whsca.cas_upc_no =
+        CHAR(SUBSTR(DIGITS(DECIMAL(RTRIM(sv1.mstr_art_nbr),14)),1,1)
+           ||SUBSTR(DIGITS(DECIMAL(RTRIM(sv1.mstr_art_nbr),14)),3,1)     
+           ||SUBSTR(DIGITS(DECIMAL(RTRIM(sv1.mstr_art_nbr),14)),2,1)     
+           ||SUBSTR(DIGITS(DECIMAL(RTRIM(sv1.mstr_art_nbr),14)),4,10),13)
+   with ur
+   ;
+ 
+ select *
+   from prd.sv1_sku_vndr_dtl sv1 
+  where sv1.sku_nbr  = '01411942'
+   with ur;
    
