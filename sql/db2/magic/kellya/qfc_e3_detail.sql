@@ -1,3 +1,4 @@
+--qfc e3 detail top 8 stores
 with detail as (
 select sl4.sku_nbr 
       ,sl4.loc_nbr 

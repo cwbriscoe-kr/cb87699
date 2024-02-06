@@ -1,21 +1,21 @@
 select *
-  from accp.or1_mcs_org_rqst
+  from prd.or1_mcs_org_rqst
   with UR;
   
 select *
-  from accp.or2_org_rgn oor
+  from prd.or2_org_rgn oor
   with UR;
   
 select *
-  from accp.or3_org_rgn oor 
+  from prd.or3_org_rgn oor
   with UR;
   
 select *
-  from ACCP.dl2_org_dept_loc dodl 
+  from prd.dl2_org_dept_loc dodl
   with UR;
   
 select *
-  from accp.ol1_org_loc ool 
+  from prd.ol1_org_loc ool
  where org_rgn_nbr = '92'
   with ur;
 
@@ -26,7 +26,7 @@ select *
 select SUBSTR(CHAR((DECIMAL(RTRIM(va1.art_nbr),14))),2,13) as upc
       ,art_nbr 
   from prd.va1_vndr_art va1
-  with ur;   '0000071666537'
+  with ur;   --'0000071666537'
   
   
 select *
@@ -71,3 +71,10 @@ select skl_grp_cd, count(*) as cnt
  order by cnt desc
   with ur
   ;
+
+select *
+  from prd.al9_audit_log
+ where rec_alt_ts >= '2024-02-06-00.29.34.442977'
+   --and txn_type = 8021
+  with ur
+;
