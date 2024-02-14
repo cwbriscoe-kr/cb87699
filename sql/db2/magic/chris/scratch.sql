@@ -78,3 +78,53 @@ select *
    --and txn_type = 8021
   with ur
 ;
+
+select *
+  from prd.ppq_pid_proc_que
+ with ur;
+
+select *
+  from prd.nt3_skc_net_tfr
+  with ur;
+
+select *
+  from prd.spl_sku_pg_loc
+ where loc_nbr like '00%'
+  with ur;
+
+select *
+  from prd.spg_sku_prod_grp
+  with ur;
+
+select *
+  from prd.th2_tbl_hdr
+ where tbl_desc like '%SMITH%'
+  with ur;
+
+select *
+  from prd.tss_sched_task
+  with ur;
+
+select *
+  from prd.tsk_task
+  with ur;
+
+select *
+  from prd.ol2_org_loc
+ where org_co_id = '91'
+   and org_rgn_id = '21'
+order by org_rgn_id, loc_id
+  with ur;
+
+select skl_grp_cd
+      ,count(*) as item_count
+  from prd.rs5_rpln_skl
+ where skl_grp_cd like '21%'
+ group by skl_grp_cd
+ order by count(*) desc
+  with ur;
+
+select *
+  from accp.td1_tbl_dtl
+ where tbl_id = 'K015'
+  with ur;

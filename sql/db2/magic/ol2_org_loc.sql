@@ -10,6 +10,7 @@ select *
  --where loc_id = '11672'
    where loc_id like '50%'
      and loc_clse_dt > current date
+     and loc_opn_dt < current date
  order by loc_id
  ;
  
