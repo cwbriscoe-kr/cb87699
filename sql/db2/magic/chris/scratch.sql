@@ -116,6 +116,14 @@ select *
 order by org_rgn_id, loc_id
   with ur;
 
+select oa1.*
+  from prd.ol2_org_loc ol2
+      ,prd.oa1_org_addr oa1
+ where 1=1
+   and ol2.addr_key_nbr = oa1.addr_id
+   and ol2.loc_id like '50%'
+  with ur;
+
 select skl_grp_cd
       ,count(*) as item_count
   from prd.rs5_rpln_skl
@@ -128,3 +136,40 @@ select *
   from accp.td1_tbl_dtl
  where tbl_id = 'K015'
   with ur;
+
+select *
+  from prd.sl4_sku_loc
+ where loc_nbr like '50%'
+   and rec_stat_cd = '01'
+  with ur;
+
+select *
+  from prd.sla_sku_loc_auth
+  with ur;
+
+select rec_stat_cd, is2.*
+  from prd.is2_itm_sku is2
+ where sku_nbr = '30714717'
+  with ur;
+
+select rec_stat_cd, sl4.*
+  from prd.sl4_sku_loc sl4
+ where sku_nbr = '30714717'
+  -- and rec_stat_cd = '01'
+ order by loc_nbr
+  with ur;
+
+SELECT DISTINCT SL4.SKU_NBR
+  FROM prd.SL4_SKU_LOC SL4
+ WHERE SL4.LOC_NBR     > '00999'
+   AND SL4.REC_STAT_CD < '70'
+   and sl4.sku_nbr = '30714717'
+   AND NOT EXISTS
+      (SELECT 'A'
+         FROM prd.SL4_SKU_LOC SL41
+        WHERE SL41.SKU_NBR     = SL4.SKU_NBR
+          AND SL41.LOC_NBR     < '01000'
+          AND SL41.REC_STAT_CD < '69'
+          and sl41.loc_nbr != '00461'
+       )
+ WITH UR;
