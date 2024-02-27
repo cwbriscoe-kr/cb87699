@@ -8,7 +8,14 @@ select coalesce((
   from prd.is2_itm_sku is2
  where sku_typ_cd = '55'
 )
-select *
+select cnt as comp_sku_cnt
+      ,sku_nbr
+      ,sku_typ_cd
+      ,desc_lng_txt
+      ,rec_stat_cd
+      ,old_rec_stat_cd
+      ,rec_crt_dt
+      ,rec_alt_ts
   from data
  where cnt = 0
   with ur 
