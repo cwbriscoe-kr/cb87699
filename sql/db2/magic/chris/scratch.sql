@@ -173,3 +173,8 @@ SELECT DISTINCT SL4.SKU_NBR
           and sl41.loc_nbr != '00461'
        )
  WITH UR;
+
+select *
+  from prd.va1_vndr_art va1
+ where bas_arl_fl = 'B'
+  with ur;
