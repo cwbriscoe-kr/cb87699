@@ -178,3 +178,9 @@ select *
   from prd.va1_vndr_art va1
  where bas_arl_fl = 'B'
   with ur;
+
+select *
+  from prd.moh_mstr_ord_hdr
+ where loc_nbr like '50%'
+ order by task_nbr
+  with ur;
