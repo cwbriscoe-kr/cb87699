@@ -21,6 +21,7 @@ select data.sku_nbr
   from data
       ,prd.fi1_ft_itm fi1
  where data.itm_nbr = fi1.itm_nbr
+   and data.rec_stat_cd < '70'
    and fi1.rec_stat_cd = '01'
    and data.cnt = 0
   with ur
