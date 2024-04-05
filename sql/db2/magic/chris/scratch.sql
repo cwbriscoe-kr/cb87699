@@ -1,3 +1,5 @@
+-- noinspection SqlConstantConditionForFile
+
 select *
   from prd.or1_mcs_org_rqst
   with UR;
@@ -183,4 +185,9 @@ select *
   from prd.moh_mstr_ord_hdr
  where loc_nbr like '50%'
  order by task_nbr
+  with ur;
+
+select *
+  from prd.rs8_rpln_srce
+ where srce_id = '63421201'
   with ur;
