@@ -1,6 +1,7 @@
 select *             
   from prd.td1_tbl_dtl td1               
- where td1.tbl_id = 'F077'
+ where td1.tbl_id = 'R005'
+ order by tbl_elem_id
   with ur 
   ;
 

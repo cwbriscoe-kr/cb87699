@@ -191,3 +191,128 @@ select *
   from prd.rs8_rpln_srce
  where srce_id = '63421201'
   with ur;
+
+select *
+  from accp.ld1_ft_loc_dflt
+ where lvl08_cd = 925
+   --and lvl04_cd = 8
+  with ur;
+
+SELECT *
+  FROM accp.FT1_FT
+ WHERE LVL04_CD = 9
+   AND LVL06_CD = 85
+   AND LVL08_CD = 925
+   AND LVL_NBR  = 8
+   AND EFF_FR_DT < CURRENT DATE
+   AND EFF_TO_DT > CURRENT DATE
+  WITH UR;
+
+select *
+  from accp.ft1_ft
+ order by rec_crt_dt desc
+  with ur;
+
+SELECT *
+FROM accp.FT1_FT
+WHERE LVL04_CD = 8
+  AND LVL06_CD = 84
+  AND LVL08_CD = 925
+  AND LVL_NBR  = 8
+  AND EFF_TO_DT > CURRENT DATE
+WITH UR;
+
+delete
+from accp.fd1_ft_dflt
+where lvl01_cd = 1
+  and lvl02_cd = 1
+  and lvl03_cd = 5
+  and lvl04_cd = 8
+  and lvl05_cd = 825
+  and lvl06_cd = 84
+  and lvl07_cd = 710
+  and lvl08_cd = 925
+;
+
+delete
+from accp.ld1_ft_loc_dflt
+where lvl01_cd = 1
+  and lvl02_cd = 1
+  and lvl03_cd = 5
+  and lvl04_cd = 8
+  and lvl05_cd = 825
+  and lvl06_cd = 84
+  and lvl07_cd = 710
+  and lvl08_cd = 925
+;
+
+select *
+from accp.fd1_ft_dflt
+where lvl01_cd = 1
+  and lvl02_cd = 1
+  and lvl03_cd = 5
+  and lvl04_cd = 8
+  and lvl05_cd = 825
+  and lvl06_cd = 84
+  and lvl07_cd = 710
+  and lvl08_cd = 925
+with ur;
+
+select *
+from accp.ld1_ft_loc_dflt
+where lvl01_cd = 1
+  and lvl02_cd = 1
+  and lvl03_cd = 5
+  and lvl04_cd = 8
+  and lvl05_cd = 825
+  and lvl06_cd = 84
+  and lvl07_cd = 710
+  and lvl08_cd = 925
+with ur;
+
+select *
+from accp.ld1_ft_loc_dflt
+where lvl01_cd = 1
+  and lvl02_cd = 1
+  and lvl03_cd = 5
+  and lvl04_cd = 9
+  and lvl05_cd = 910
+  and lvl06_cd = 85
+  and lvl07_cd = 170
+  and lvl08_cd = 925
+with ur;
+
+with ft as (
+select lvl08_cd
+     , count(*) as cnt
+  from accp.ft1_ft
+ where lvl_nbr = 8
+   --and lvl04_cd in (7,8,9)
+   and eff_fr_dt < CURRENT DATE
+   and eff_to_dt > CURRENT DATE
+group by lvl08_cd
+having count(*) > 1
+)
+select ft1.*
+  from ft
+      ,accp.ft1_ft ft1
+ where ft1.lvl08_cd = ft.lvl08_cd
+   and eff_fr_dt < current date
+   and eff_to_dt > current date
+   and lvl_nbr = 8
+ order by lvl08_cd
+ WITH UR
+;
+
+select *
+  from accp.ft1_ft
+ where lvl_nbr = 8
+   and eff_fr_dt < current date
+   and eff_to_dt > current date
+   and lvl08_cd = 925
+  with ur;
+
+select *
+  from prd.ld1_ft_loc_dflt
+ where lvl04_cd not in (7,8,9)
+  with ur;

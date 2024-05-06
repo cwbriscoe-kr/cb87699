@@ -10,3 +10,7 @@ select *
  where rec_stat_cd not in ('01','40','70','99')
   with ur
   ;
+
+select count(*) as cnt
+  from prd.sl4_sku_loc
+  with ur;

@@ -42,4 +42,9 @@ select org_co_id
  order by org_co_id, org_rgn_id, loc_id
   with ur
   ;
+
+select *
+  from prd.ol2_org_loc
+ where loc_id = '00300'
+;
  
