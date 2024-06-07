@@ -316,3 +316,31 @@ select *
   from prd.ld1_ft_loc_dflt
  where lvl04_cd not in (7,8,9)
   with ur;
+
+select *
+  from prd.sv1_sku_vndr_dtl
+ where case_art_nbr in (
+'10051000090543',
+'10051000175189',
+'10051000075205',
+'10011110636703',
+'10011110636710',
+'10011110905632',
+'00011110102294',
+'00011110102300'
+     )
+with ur;
+
+
+select *
+  from accp.ppq_pid_proc_que
+  with ur;
+
+select *
+  from accp.is2_itm_sku
+ where sku_nbr = '00044844'
+ with ur;
+
+select *
+  from accp.rs5_rpln_skl
+  with ur;

@@ -7,6 +7,6 @@ select *
  
 select *
   from prd.is2_itm_sku iis 
- where sku_nbr = '61754744'
+ --where sku_nbr = '61754744'
   with ur 
   ;
