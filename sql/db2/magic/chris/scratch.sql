@@ -342,5 +342,36 @@ select *
  with ur;
 
 select *
-  from accp.rs5_rpln_skl
+  from prd.rs5_rpln_skl
+  with ur;
+
+select inf_svc_lvl_cd
+      ,count(*) as cnt
+  from prd.rs5_rpln_skl
+ group by inf_svc_lvl_cd
+ order by count(*) desc
+  with ur;
+
+select *
+  from prd.ad3_skc_adj
+ where sku_nbr = 21136818
+ order by perd_fr_dt desc
+  with ur;
+
+select *
+  from prd.adz_cskp_adj
+  with ur;
+
+select *
+  from prd.rs8_rpln_srce
+ where srce_id = 10776400
+;
+
+select *
+  from prd.is2_itm_sku
+ where sku_nbr = '29661213'
+  with ur;
+
+select *
+  from prd.oh3_skc_oh
   with ur;
