@@ -27,6 +27,7 @@ select fi1.ft_lvl06_cd as dept
    and fi1.rec_stat_cd = '01'
    and va1.sku_nbr = is2.sku_nbr
    and va1.bas_arl_fl = 'B'
+   and fi1.ft_lvl09_cd != 9
    and not exists (
        select 1
          from prd.oo3_skc_oo oo3

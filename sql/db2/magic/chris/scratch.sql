@@ -375,3 +375,57 @@ select *
 select *
   from prd.oh3_skc_oh
   with ur;
+
+select is2.rec_stat_cd
+      ,count(*) as cnt
+  from prd.is2_itm_sku is2
+ where is2.rec_stat_chng_dt < current date - 1 year
+ group by is2.rec_stat_cd
+ order by is2.rec_stat_cd
+  with ur;
+
+select count(*) from prd.rs5_rpln_skl with ur;
+
+select *
+  from prd.fd1_ft_dflt
+ order by rec_alt_ts desc
+  with ur;
+
+select *
+  from prd.al1_audit_log
+ where prgm_id = 'UAC0030'
+   and user_id = 'JB37235'
+ order by log_dt desc
+  with ur;
+
+select min(rec_crt_ts)
+  from prd.al1_audit_log
+  with ur;
+
+select *
+  from accp.fi1_ft_itm
+ where itm_nbr = '11027928'
+  with ur;
+
+select *
+  from accp.fi1_ft_itm
+ where oper_id = 'JB37235'
+   and rec_crt_dt = '2024-07-30'
+  with ur;
+
+select *
+  from prd.fi1_ft_itm
+ where rec_stat_cd = '09'
+  with ur;
+
+with report as (
+  select rs5.*, rand() random
+    from prd.rs5_rpln_skl rs5
+)
+select srce_id as vendor
+      ,sku_nbr as sku
+      ,skl_grp_cd as loc
+      ,skl_rpln_mthd_cd as mthd
+  from report
+ order by random
+ fetch first 1000 rows only;
