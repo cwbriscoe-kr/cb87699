@@ -429,3 +429,27 @@ select srce_id as vendor
   from report
  order by random
  fetch first 1000 rows only;
+
+select *
+  from prd.ld1_ft_loc_dflt
+  with ur;
+
+select *
+  from prd.is2_itm_sku
+ where rec_stat_cd = '30'
+   and sku_typ_cd = '01'
+  with ur;
+
+select *
+  from prd.dl1_org_dept_loc
+ where rec_stat_cd = '01'
+  with ur;
+
+select *
+  from prd.sl4_sku_loc
+  with ur;
+
+select *
+  from prd.va1_vndr_art
+ where sku_nbr = '32687040'
+  with ur;
