@@ -6,17 +6,14 @@ with stypes as (
        and td1.org_rgn_nbr = '00'
        and substr(td1.tbl_elem_text,26,1) = 'Y'
 )
-select fi1.ft_lvl06_cd as dept
+select is2.sku_nbr as sku
+      ,sl4.loc_nbr as loc
+      ,fi1.ft_lvl06_cd as dept
       ,fi1.ft_lvl07_cd as buyr
-      ,is2.sku_nbr as sku
-      ,va1.art_nbr as bas_upc
-      ,is2.desc_lng_txt as desc
-      ,is2.rec_crt_dt as created
       ,fi1.ft_lvl08_cd as cls
       ,fi1.ft_lvl09_cd as scls
-      ,is2.sku_typ_cd as stype
+      ,is2.sku_typ_cd as sku_typ
       ,is2.rec_stat_cd as sku_sts
-      ,sl4.loc_nbr as loc
   from prd.is2_itm_sku is2
       ,prd.fi1_ft_itm fi1
       ,prd.va1_vndr_art va1
@@ -32,15 +29,25 @@ select fi1.ft_lvl06_cd as dept
    and sl4.sku_nbr = is2.sku_nbr
    and sl4.rec_stat_cd = '01'
    and not exists (
-       select 1
-         from prd.dl1_org_dept_loc dl1
-        where dl1.org_co_nbr = '1'
-          and dl1.dept_nbr = '00' || fi1.ft_lvl06_cd
-          and dl1.loc_nbr = sl4.loc_nbr
-          and dl1.rec_stat_cd = '01'
+     select 1
+     from prd.dl1_org_dept_loc dl1
+     where dl1.org_co_nbr = '1'
+       and dl1.dept_nbr = '00' || fi1.ft_lvl06_cd
+       and dl1.loc_nbr = sl4.loc_nbr
+       and dl1.rec_stat_cd = '01'
+ )
+   and not exists (
+     select 1
+     from prd.oo3_skc_oo oo3
+     where oo3.sku_nbr = is2.dec_sku_nbr
+       and oo3.qty > 0.0
    )
- fetch first 1000 rows only
- --order by fi1.ft_lvl06_cd
- --        ,fi1.ft_lvl07_cd
- --        ,is2.sku_nbr
+   and not exists (
+     select 1
+     from prd.oh3_skc_oh oh3
+     where oh3.sku_nbr = is2.dec_sku_nbr
+       and oh3.qty != 0.0
+   )
+ order by is2.sku_nbr
+         ,sl4.loc_nbr
   with ur;
