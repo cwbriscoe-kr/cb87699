@@ -10,3 +10,8 @@ select *
  --where sku_nbr = '61754744'
   with ur 
   ;
+
+select rms_cd, is2.*
+  from accp.is2_itm_sku is2
+ where sku_nbr = '00854016'
+  with ur;

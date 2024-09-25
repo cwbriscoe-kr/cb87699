@@ -35,7 +35,7 @@ select is2.sku_nbr as sku
        and dl1.dept_nbr = '00' || fi1.ft_lvl06_cd
        and dl1.loc_nbr = sl4.loc_nbr
        and dl1.rec_stat_cd = '01'
- )
+   )
    and not exists (
      select 1
      from prd.oo3_skc_oo oo3

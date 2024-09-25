@@ -14,3 +14,9 @@ select *
 select count(*) as cnt
   from prd.sl4_sku_loc
   with ur;
+
+select *
+  from accp.sl4_sku_loc sl4
+ where sku_nbr = '00854016'
+   and loc_nbr = '50887'
+  with ur;
