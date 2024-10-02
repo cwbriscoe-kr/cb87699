@@ -453,3 +453,31 @@ select *
   from prd.va1_vndr_art
  where sku_nbr = '32687040'
   with ur;
+
+select *
+  from accp.ap1_ac_appl_prf
+  with ur;
+
+select *
+from accp.ua1_ac_usr_appl
+with ur;
+
+select *
+  from accp.td1_tbl_dtl
+ where tbl_elem_text like 'FRED MEYER%'
+  with ur;
+
+select *
+from accp.jp1_job_parm
+where parm_txt like 'FRED MEYER%'
+with ur;
+
+select *
+  from prd.rs8_rpln_srce
+ where srce_id = '10428300'
+  with ur;
+
+select *
+  from sv1_sku_vndr_dtl
+ where vndr_nbr = '10428300'
+  with ur;
