@@ -481,3 +481,54 @@ select *
   from sv1_sku_vndr_dtl
  where vndr_nbr = '10428300'
   with ur;
+
+select *
+from prd.rs8_rpln_srce
+where srce_id like '104283%'
+with ur;
+
+select *
+  from prd.is2_itm_sku
+-- where sku_nbr = '01056211'
+ where sku_typ_cd = '01'
+   and rec_stat_cd = '30'
+   and substr(desc_shrt_txt,1,2) = 'OS'
+   and substr(desc_shrt_txt,1,3) != 'OSU'
+  with ur;
+
+select *
+  from prd.fi1_ft_itm
+ where itm_nbr = '14609374'
+  with ur;
+
+select *
+  from prd.tc2_po_trm_cond
+ where vndr_id = '10428300'
+  with ur;
+
+select *
+  from prd.li2_po_ln_itm
+ where po_id = '000034585722'
+  with ur;
+
+select *
+  from prd.rs5_rpln_skl
+ where sku_nbr = '89456217'
+  with ur;
+
+select *
+  from prd.sl4_sku_loc
+ where sku_nbr = '89456217'
+  with ur;
+
+select *
+  from prd.ft1_ft
+ where lvl01_cd = 1
+   and lvl02_cd = 1
+   and lvl03_cd = 4
+   and lvl_nbr = 8
+  with ur;
+
+select *
+  from prd.li2_po_ln_itm
+  with ur;

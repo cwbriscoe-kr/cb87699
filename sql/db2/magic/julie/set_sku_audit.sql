@@ -28,7 +28,7 @@ select data.sku_nbr
   ;
   
 select *
-  from prd.sc9_set_sku_comp sc9
+  from accp.sc9_set_sku_comp sc9
  where sku_nbr = '01034813'
   with ur
   ;
