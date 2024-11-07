@@ -501,7 +501,10 @@ select *
  where itm_nbr = '14609374'
   with ur;
 
-select *
+select vndr_id
+      ,po_id
+      ,arr_dt
+      ,arr_dt_to
   from prd.tc2_po_trm_cond
  where vndr_id = '10428300'
   with ur;
@@ -531,4 +534,15 @@ select *
 
 select *
   from prd.li2_po_ln_itm
+  with ur;
+
+select *
+  from prd.rs8_rpln_srce
+ where srce_id = '10776400'
+ --where srce_id = '10469000'
+  with ur;
+
+select *
+  from prd.rs5_rpln_skl
+ where srce_id = '10776400'
   with ur;

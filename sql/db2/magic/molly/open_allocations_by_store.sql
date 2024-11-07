@@ -5,6 +5,7 @@ select ol2.org_co_id as co_id
       ,li2.sku_nbr as sku
       ,ad9.alc_qty as qty
       ,sl4.mdse_flow_cd as flow_cd
+      ,tc2.arr_dt as arr_dt
       ,is2.desc_lng_txt as desc
   from prd.tc2_po_trm_cond tc2
       ,prd.li2_po_ln_itm li2
