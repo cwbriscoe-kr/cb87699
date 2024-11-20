@@ -546,3 +546,35 @@ select *
   from prd.rs5_rpln_skl
  where srce_id = '10776400'
   with ur;
+
+select *
+  from prd.rs5_rpln_skl
+ where sku_nbr = '01140149'
+   and skl_grp_cd in ('00005','00011','00013','00017','00018')
+ order by skl_grp_cd
+  with ur;
+
+select *
+  from accp.rs5_rpln_skl
+ where skl_rpln_mthd_cd = 'I'
+ order by sku_nbr desc
+  with ur;
+
+select distinct va1.art_nbr_id_cd
+  from prd.va1_vndr_art va1
+  with ur;
+
+select *
+  from prd.pp1_mdse_prc_pnd
+  with ur;
+  
+select *
+  from prd.rs5_rpln_skl rrs 
+ where rrs.org_id = '99'
+  with ur;
+
+select *
+  from prd.pm2_mdse_prc_mstr
+ where sku_nbr = '12717118'
+   and loc_nbr = '00111'
+  with ur;

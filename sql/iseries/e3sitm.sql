@@ -1,6 +1,8 @@
 select iitem
       ,istor
-      ,isize2
-      ,ioh2nd
+      ,ipres
+      ,e3sfmi.e3sitm.*
 from e3sfmi.e3sitm
- where iitem  = '01093148'
+ where iitem  = '00854016'
+   and istor = '00614'
+  with ur;
