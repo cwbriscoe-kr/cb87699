@@ -578,3 +578,9 @@ select *
  where sku_nbr = '12717118'
    and loc_nbr = '00111'
   with ur;
+
+
+select *
+  from prd.va1_vndr_art
+ where bas_arl_fl = 'B'
+  with ur;
