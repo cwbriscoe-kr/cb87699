@@ -584,3 +584,9 @@ select *
   from prd.va1_vndr_art
  where bas_arl_fl = 'B'
   with ur;
+
+select *
+  from prd.pp1_mdse_prc_pnd
+ where stat_ind in ('L', 'A')
+   and prc_typ_cd in ('07','08','67','68','77','78','65','66','60','61','62','63','89')
+  with ur;
