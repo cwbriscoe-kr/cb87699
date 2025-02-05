@@ -22,7 +22,7 @@ select distinct(org_co_id)
  
 select *
   from prd.ol2_org_loc ol2
- where loc_id in ('50883','50894','50972')
+ where loc_id in ('00094','00119','00444','00475','00477','00495')
   with ur;
 
 

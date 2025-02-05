@@ -4,11 +4,10 @@ select *
   with ur
   ;
   
-/50887
-
 select *
   from prd.rs5_rpln_skl rrs 
- where sku_nbr = '16885042'
+ where sku_nbr = '08139214'
+   --and skl_grp_cd = '40475'
  order by skl_grp_cd 
   with ur;
 
