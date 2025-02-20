@@ -1,0 +1,21 @@
+SELECT  *
+  FROM  accp.TSA_TEMP_STORAGE
+ WHERE  USER_ID = 'APDT-RM'
+   and  APPL_ID = 'PRMZ000D'
+   --AND  SUBSTR(REC_KEY,1,7) = :WS-SCHD-JUL-X
+  WITH  UR;
+
+delete
+FROM  accp.TSA_TEMP_STORAGE
+WHERE  USER_ID = 'APDT-RM'
+  and  APPL_ID = 'PRMZ000D'
+  and  rec_key = '2025050-0140'
+--AND  SUBSTR(REC_KEY,1,7) = '2025048'
+;
+
+update accp.TSA_TEMP_STORAGE
+   set rec_data_02 = 'F 2025-02-19-22.08.14.037682 2025-02-19-22.08.14.037682 000000'
+ WHERE  USER_ID = 'APDT-RM'
+   and  APPL_ID = 'PRMZ000D'
+   and  rec_key = '2025050-0130'
+;

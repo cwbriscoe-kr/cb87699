@@ -4,8 +4,9 @@ select iitem
       ,isize2 as capacity
       ,e3sfmi.e3sitm.*
 from e3sfmi.e3sitm
+ --where iitem  = '08139214'
  where iitem  = '08139214'
-   and istor = '40094'
+   and istor = '00475'
   with ur;
 
 set e3sitm.isize2 = :hCapacity

@@ -45,6 +45,5 @@ select org_co_id
 
 select *
   from prd.ol2_org_loc
- where loc_id = '00300'
 ;
  
