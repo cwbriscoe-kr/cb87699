@@ -590,3 +590,23 @@ select *
  where stat_ind in ('L', 'A')
    and prc_typ_cd in ('07','08','67','68','77','78','65','66','60','61','62','63','89')
   with ur;
+
+select is2.*
+  from prd.is2_itm_sku is2
+   where not exists (
+       select 1
+         from prd.va1_vndr_art va1
+        where va1.sku_nbr = is2.sku_nbr
+          and va1.ld_art_ind = 'L'
+ )
+;
+
+select *
+  from prd.is2_itm_sku
+ where sku_nbr = '52969645'
+  with ur;
+
+select *
+  from prd.va1_vndr_art
+ where sku_nbr = '97805717'
+  with ur;
