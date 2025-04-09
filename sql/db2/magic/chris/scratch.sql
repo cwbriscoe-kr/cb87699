@@ -574,7 +574,7 @@ select *
   with ur;
 
 select *
-  from prd.pm2_mdse_prc_mstr
+  from accp.pm2_mdse_prc_mstr
  where sku_nbr = '12717118'
    and loc_nbr = '00111'
   with ur;
@@ -602,11 +602,65 @@ select is2.*
 ;
 
 select *
-  from prd.is2_itm_sku
+  from accp.is2_itm_sku
  where sku_nbr = '52969645'
   with ur;
 
 select *
-  from prd.va1_vndr_art
+  from accp.va1_vndr_art
  where sku_nbr = '97805717'
   with ur;
+
+select 1
+  from prd.worklist
+  with ur;
+
+select *
+  from prd.anr_aloc_notes_rcd
+  with ur;
+
+select *
+  from accp.rs6_rpln_sku
+  with ur;
+
+select *
+from accp.rs8_rpln_srce
+with ur;
+
+select *
+  from accp.sa4_skp_sle
+  with ur;
+
+SELECT DBNAME, TABNAME, COPYPOOL, REORG_PENDING
+FROM SYSIBM.SYSTABLES
+WHERE COPYPOOL = 'Y' AND REORG_PENDING = 'Y';
+
+select *
+  from sysibm.systables
+ WHERE COPY_PENDING = 'Y';
+  with ur;
+
+
+SELECT DBNAME, TABNAME, COPY_PENDING
+FROM SYSIBM.SYSTABLES
+WHERE EXISTS (
+    SELECT 1
+    FROM SYSIBM.SYSCOPY
+    WHERE SYSIBM.SYSTABLES.DBNAME = SYSIBM.SYSCOPY.DBNAME
+      AND SYSIBM.SYSTABLES.TABNAME = SYSIBM.SYSCOPY.TABNAME
+      AND COPY_PENDING = 'Y'
+);
+
+select *
+  from sysibm.syscopy
+ where copy_pending = 'Y'
+  with ur;
+
+select *
+  from accp.rs8_rpln_srce
+  with ur;
+
+select *
+  from accp.sl4_sku_loc
+ with ur;
+
