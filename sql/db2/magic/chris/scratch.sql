@@ -664,3 +664,39 @@ select *
   from accp.sl4_sku_loc
  with ur;
 
+select *
+  from rs8_rpln_srce
+  with ur;
+
+select rs6.sku_nbr
+      ,rs8.srce_id
+  from prd.rs6_rpln_sku rs6
+      ,prd.rs8_rpln_srce rs8
+ where rs8.srce_id = rs6.srce_id
+   and rs8.srce_rpln_mthd_cd = rs6.sku_rpln_mthd_cd
+   and rs8.srce_rpln_mthd_cd = 'D'
+ group by rs6.sku_nbr, rs8.srce_id
+ order by rs6.sku_nbr, rs8.srce_id
+  with ur;
+
+with skus as (
+select rs6.sku_nbr
+      ,count(*) as cnt
+from prd.rs6_rpln_sku rs6
+    ,prd.rs8_rpln_srce rs8
+where rs8.srce_id = rs6.srce_id
+  and rs8.srce_rpln_mthd_cd = rs6.sku_rpln_mthd_cd
+  and rs8.srce_rpln_mthd_cd in ('B', 'S')
+group by  rs6.sku_nbr
+having count(*) > 1
+)
+select rs6.sku_nbr
+      ,rs8.srce_id
+      ,rs8.srce_whse_nbr
+  from prd.rs6_rpln_sku rs6, skus
+      ,prd.rs8_rpln_srce rs8
+ where skus.sku_nbr = rs6.sku_nbr
+   and rs6.sku_rpln_mthd_cd in ('B','S')
+   and rs6.srce_id = rs8.srce_id
+ order by skus.sku_nbr, rs6.srce_id
+ with ur;
