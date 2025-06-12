@@ -27,9 +27,14 @@ select *
   
 select SUBSTR(CHAR((DECIMAL(RTRIM(va1.art_nbr),14))),2,13) as upc
       ,art_nbr 
-  from prd.va1_vndr_art va1
-  with ur;   --'0000071666537'
-  
+  from va1_vndr_art va1
+  with ur;
+
+select substr(char(decimal(rtrim(va1.art_nbr),14)),2,14) as upc
+      ,art_nbr
+from va1_vndr_art va1
+with ur;
+
   
 select *
   from prd.ft1_ft
@@ -700,3 +705,50 @@ select rs6.sku_nbr
    and rs6.srce_id = rs8.srce_id
  order by skus.sku_nbr, rs6.srce_id
  with ur;
+
+select *
+  from accp.td1_tbl_dtl
+ where tbl_id = 'R004'
+  with ur;
+
+select *
+  from accp.tss_sched_task
+ where task_nbr = 401
+   and task_yy = 2025
+   and task_prd = 5
+   and task_wk = 2
+  with ur;
+
+SELECT DISTINCT
+       SUBSTR(TD1.TBL_ELEM_TEXT,30,5)   AS DCNBR
+     , SUBSTR(DIGITS(TSS.STOP_NBR),1,5) AS LOCNBR
+     , SUBSTR(DIGITS(TSS.TASK_DAY),4,2) AS DAYNBR
+  FROM TSS_SCHED_TASK        TSS
+     , TD1_TBL_DTL           TD1
+ WHERE TSS.TASK_NBR        = 401
+   AND TSS.TASK_YY         = 2025
+   AND TSS.TASK_PRD        = 5
+   AND TASK_WK             = 2
+   AND TD1.TBL_ID          = 'F077'
+   AND SUBSTR(TD1.TBL_ELEM_ID,1,2)    =
+       SUBSTR(DIGITS(TSS.DC_NBR),4,2)
+   AND SUBSTR(TD1.TBL_ELEM_ID,3,2)    =
+       SUBSTR(DIGITS(TSS.WHSE_NBR),4,2)
+  with ur;
+
+select *
+  from is2_itm_sku
+ where sku_nbr = '20445119'
+  with ur;
+
+select *
+  from va1_vndr_art
+ where vndr_nbr = '09796227'
+  with ur;
+
+select *
+  from sv1_sku_vndr_dtl
+ where vndr_nbr = '09796227'
+  with ur;
+
+select * from sv1_sku_vndr_dtl;
