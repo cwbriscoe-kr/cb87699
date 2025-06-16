@@ -26,3 +26,9 @@ group by rrs.sku_nbr
 fetch first 100 rows only
 with ur
 ;
+
+select *
+  from rs5_rpln_skl
+ where sku_nbr = '27032718'
+   and skl_grp_cd = '00017'
+  with ur;
