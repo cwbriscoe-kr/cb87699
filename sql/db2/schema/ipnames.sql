@@ -1,4 +1,4 @@
 select *
   from sysibm.ipnames
- where linkname = 'EGRPROD'
+ where linkname = 'EIIPROD'
 ;

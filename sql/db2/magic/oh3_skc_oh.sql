@@ -6,10 +6,23 @@ where sku_nbr = 43425617
 
 select *
   from oh3_skc_oh
- where sku_nbr = 00474740
+where sku_nbr =02246444
    and loc_nbr = 00065
-   --and perd_fr_dt = '2025-06-15'
  order by perd_fr_dt desc
+  with ur;
+
+select *
+from oh3_skc_oh
+where sku_nbr = 83397745
+  and loc_nbr = 00461
+order by perd_fr_dt desc
+with ur;
+
+select *
+  from oh3_skc_oh oh3
+ where loc_nbr = 00461
+   and perd_fr_dt = '2025-06-29'
+  fetch first 10 rows only
   with ur;
 
 insert into oh3_skc_oh
