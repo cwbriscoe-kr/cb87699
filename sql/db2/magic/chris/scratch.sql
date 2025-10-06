@@ -752,3 +752,49 @@ select *
   with ur;
 
 select * from sv1_sku_vndr_dtl;
+
+select *
+  from rs5_rpln_skl
+ where sku_nbr = '93379540'
+  with ur;
+
+select *
+from rs5_rpln_skl
+where sku_nbr = '82979843'
+with ur;
+
+select *
+  from rs8_rpln_srce
+ where srce_id = '11358701'
+  with ur;
+
+select sku_nbr, srce_id, sku_auto_rls_ind
+from rs6_rpln_sku
+where sku_nbr = '93379540'
+with ur;
+
+select *
+  from prd.ip1_ftc_in_prs
+  with ur;
+
+select *
+  from id1_itm_dtl
+ where itm_nbr = '05570546'
+  with ur;
+
+select *
+  from is2_itm_sku
+ where itm_nbr = '03443491'
+  with ur;
+
+select *
+  from sv1_sku_vndr_dtl
+  with ur;
+
+select *
+  from prd.vd1_vndr_dtl
+  with ur;
+
+select *
+  from prd.va2_vndr_loc_addr
+  with ur;

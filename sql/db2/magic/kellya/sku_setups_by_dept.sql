@@ -13,8 +13,8 @@ select fi1.ft_lvl06_cd as dept
       ,fi1_ft_itm fi1
  where is2.sku_typ_cd = skutyp.type
    and is2.itm_nbr = fi1.itm_nbr 
-   and fi1.rec_stat_cd = '01'
-   and is2.rec_crt_dt between '2025-02-04' and '2025-05-25'
+   --and fi1.rec_stat_cd = '01'
+   and is2.rec_crt_dt between '2024-01-01' and '2024-12-31'
  group by fi1.ft_lvl06_cd
  order by count(*) desc
    ;
