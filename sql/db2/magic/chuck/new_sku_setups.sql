@@ -21,3 +21,9 @@ select cal.prd_yy as fiscal_year
  group by cal.prd_yy, cal.prd_nbr, fi1.ft_lvl06_cd
  order by cal.prd_yy, cal.prd_nbr, count(*) desc
    ;
+
+select *
+  from is2_itm_sku
+ where rec_crt_dt between '2024-01-01' and '2024-01-31'
+   with ur
+   ;
