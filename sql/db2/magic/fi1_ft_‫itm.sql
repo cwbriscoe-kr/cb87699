@@ -29,3 +29,9 @@ select is2.*
  where is2.itm_nbr = it.itm_nbr
   with ur
 ;
+
+select *
+  from fi1_ft_itm
+    where dec_itm_nbr = 13731687
+        and rec_stat_cd = '01'
+    with ur;

@@ -13,6 +13,11 @@ select *
   ;
 
 select rms_cd, is2.*
-  from is2)itm_sku is2
+  from is2_itm_sku is2
  where sku_nbr = '00854016'
+  with ur;
+
+select *
+  from is2_itm_sku
+ where sku_nbr = '02618012'
   with ur;
