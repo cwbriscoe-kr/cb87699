@@ -798,3 +798,43 @@ select *
 select *
   from prd.va2_vndr_loc_addr
   with ur;
+
+select *
+  from is2_itm_sku
+ --where itm_nbr = '02376370'
+  with ur;
+
+select *
+  from fi1_ft_itm
+ where itm_nbr = '02376370'
+  with ur;
+
+select *
+from id1_itm_dtl
+where itm_grp_no = '02376370'
+with ur;
+
+select reg_cd
+  from ed1_sku_ext_dtl
+ where reg_cd > '   '
+    with ur;
+
+
+select *
+  from ic1_itm_choice_dtl
+  with ur;
+
+select *
+  from sv1_sku_vndr_dtl
+ where vndr_nbr = '10394402'
+  with ur;
+
+select *
+  from va1_vndr_art
+ where vndr_nbr = '37692124'
+  with ur;
+
+select *
+  from mh2_rcpt_mnft_hdr
+ where mnft_nbr = '09200671'
+  with ur;

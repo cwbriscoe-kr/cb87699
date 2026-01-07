@@ -1,4 +1,5 @@
-with skutyp as (                                      
+-- Desc: Count of SKUs by Department for selling SKU types
+with skutyp as (
   select substr(tbl_elem_id,1,2) as type               
    from td1_tbl_dtl
   where tbl_id      = 'F026'                   
@@ -14,7 +15,7 @@ select fi1.ft_lvl06_cd as dept
  where is2.sku_typ_cd = skutyp.type
    and is2.itm_nbr = fi1.itm_nbr 
    --and fi1.rec_stat_cd = '01'
-   and is2.rec_crt_dt between '2024-01-01' and '2024-12-31'
+   and is2.rec_crt_dt between '2025-08-17' and '2025-11-08'
  group by fi1.ft_lvl06_cd
  order by count(*) desc
    ;
