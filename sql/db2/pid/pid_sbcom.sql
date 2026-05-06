@@ -1,9 +1,8 @@
 select *
-  from prd.pid_sbcom
+  from pid_sbcom
  where fam_dpt_cd > '0000'
-   for fetch only
  fetch first 1000 row only
- optimize for 1000 row;
+  with ur;
 
 select *
   from prd.pid_sbcom

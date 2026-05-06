@@ -17,7 +17,7 @@ select cal.prd_yy as fiscal_year
  where is2.sku_typ_cd = skutyp.type
    and is2.itm_nbr = fi1.itm_nbr
    and is2.rec_crt_dt =  cal.greg_dt
-   and cal.prd_yy >= 2024
+   and cal.prd_yy >= 2025
  group by cal.prd_yy, cal.prd_nbr, fi1.ft_lvl06_cd
  order by cal.prd_yy, cal.prd_nbr, count(*) desc
    ;

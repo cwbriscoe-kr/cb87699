@@ -15,7 +15,8 @@ select fi1.ft_lvl06_cd as dept
  where is2.sku_typ_cd = skutyp.type
    and is2.itm_nbr = fi1.itm_nbr 
    --and fi1.rec_stat_cd = '01'
-   and is2.rec_crt_dt between '2025-08-17' and '2025-11-08'
+   and is2.rec_crt_dt between '2025-11-09' and '2026-01-30'
  group by fi1.ft_lvl06_cd
  order by count(*) desc
+  with ur
    ;
