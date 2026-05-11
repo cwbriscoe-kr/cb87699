@@ -838,3 +838,12 @@ select *
   from mh2_rcpt_mnft_hdr
  where mnft_nbr = '09200671'
   with ur;
+
+select *
+  from rs8_rpln_srce
+ where srce_typ_cd != 'V'
+  with ur;
+
+select count(*) as cnt
+  from rs5_rpln_skl
+  with ur;
