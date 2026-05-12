@@ -1,5 +1,5 @@
 with skutyp as (
-  select substr(tbl_elem_id,1,2) as type
+  select distinct substr(tbl_elem_id,1,2) as type
   from td1_tbl_dtl
   where tbl_id      = 'F026'
     and org_co_nbr  = '1'
@@ -31,20 +31,18 @@ with skutyp as (
      and fi1.rec_stat_cd = '01'
      and fi1.eff_fr_dt <= current date
      and fi1.eff_to_dt >= current date
-     and 1 = (
-       select case rs8.srce_rpln_mthd_cd
-              when 'I' then
-                case when is2.rec_stat_cd <= 30 then 1 else 0 end
-              when 'D' then
-                case when is2.rec_stat_cd <= 30 then 1 else 0 end
-              when 'B' then
-                case when is2.rec_stat_cd <= 60 then 1 else 0 end
-              when 'S' then
-                case when is2.rec_stat_cd <= 70 then 1 else 0 end
-              else 0
-              end as rpln_mthd
-         from tt1_truth_tbl
-     )
+     and 1 =
+       case rs8.srce_rpln_mthd_cd
+       when 'I' then
+         case when is2.rec_stat_cd <= '30' then 1 else 0 end
+       when 'D' then
+         case when is2.rec_stat_cd <= '30' then 1 else 0 end
+       when 'B' then
+         case when is2.rec_stat_cd <= '60' then 1 else 0 end
+       when 'S' then
+         case when is2.rec_stat_cd <= '70' then 1 else 0 end
+       else 0
+       end
 ), blocked as (
   select TBL_ELEM_ID as loc_id
     from td1_tbl_dtl
@@ -60,35 +58,29 @@ with skutyp as (
         ,skus
   where sl4.sku_nbr = skus.sku_nbr
     and sl4.rec_stat_cd = '01'
-    and sl4.loc_nbr not in (
-      select loc_id from blocked
+    and  not exists (
+      select 1 from blocked where blocked.loc_id = sl4.loc_nbr
     )
-    and sl4.mdse_flow_cd = (
-      select case skus.rpln_mthd
-             when 'I' then 'RMA'
-             when 'D' then 'DC'
-             when 'B' then 'DTS'
-             when 'S' then 'DTS'
-             else '   '
-             end as rpln_mthd
-        from tt1_truth_tbl
-    )
-    and sl4.prmy_srce_nbr = (
-      select case skus.rpln_mthd
-             when 'B' then skus.srce_whse
-             when 'S' then skus.srce_whse
-             else skus.vndr_nbr
-             end as prmy_srce
-        from tt1_truth_tbl
-    )
-    and sl4.prmy_srce_typ_cd = (
-      select case skus.rpln_mthd
-             when 'B' then 'D'
-             when 'S' then 'D'
-             else 'V'
-             end as prmy_srce_typ
-        from tt1_truth_tbl
-    )
+    and sl4.mdse_flow_cd =
+      case skus.rpln_mthd
+      when 'I' then 'RMA'
+      when 'D' then 'DC'
+      when 'B' then 'DTS'
+      when 'S' then 'DTS'
+      else '   '
+      end
+    and sl4.prmy_srce_nbr =
+      case skus.rpln_mthd
+      when 'B' then skus.srce_whse
+      when 'S' then skus.srce_whse
+      else skus.vndr_nbr
+      end
+    and sl4.prmy_srce_typ_cd =
+      case skus.rpln_mthd
+      when 'B' then 'D'
+      when 'S' then 'D'
+      else 'V'
+      end
 )
   select locs.vndr_nbr
         ,locs.sku_nbr
@@ -106,13 +98,3 @@ with skutyp as (
     from locs
    order by locs.vndr_nbr, locs.sku_nbr, locs.loc_nbr
     with ur;
-
-  select *
-  from locs
- where not exists (
-       select 1
-         from rs5_rpln_skl rs5
-        where rs5.sku_nbr = locs.sku_nbr
-          and rs5.skl_grp_cd = locs.loc_nbr
- )
-  with ur;
