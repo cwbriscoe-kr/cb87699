@@ -11,6 +11,7 @@ with skutyp as (
         ,rs8.srce_whse_nbr     as srce_whse
         ,is2.sku_nbr           as sku_nbr
         ,is2.rms_cd            as rms_cd
+        ,is2.rec_stat_cd       as is2_stat_cd
         ,is2.oper_id           as is2_oper_id
         ,is2.rec_alt_ts        as is2_alt_ts
     from is2_itm_sku is2
@@ -51,6 +52,8 @@ with skutyp as (
 ), locs as (
   select skus.*
         ,sl4.loc_nbr as loc_nbr
+        ,sl4.mdse_flow_cd as flow_cd
+        ,sl4.rec_stat_cd as sl4_stat_cd
         ,sl4.oper_id as sl4_oper_id
         ,sl4.rec_alt_ts as sl4_alt_ts
     from sl4_sku_loc sl4
@@ -87,8 +90,24 @@ with skutyp as (
         from tt1_truth_tbl
     )
 )
+  select locs.vndr_nbr
+        ,locs.sku_nbr
+        ,locs.loc_nbr
+        ,locs.srce_whse
+        ,locs.rpln_mthd
+        ,locs.rms_cd
+        ,locs.is2_stat_cd
+        ,locs.is2_oper_id
+        ,locs.is2_alt_ts
+        ,locs.flow_cd
+        ,locs.sl4_stat_cd
+        ,locs.sl4_oper_id
+        ,locs.sl4_alt_ts
+    from locs
+   order by locs.vndr_nbr, locs.sku_nbr, locs.loc_nbr
+    with ur;
+
   select *
---select mdse_flow_cd, locs.*
   from locs
  where not exists (
        select 1
